@@ -1,0 +1,40 @@
+@layer base {
+    :root {
+        --background: rgb(16, 16, 16);
+        --background-elevated: rgb(24, 24, 24);
+        --background-secondary: rgb(10, 10, 10);
+        --background-tertiary: rgb(30, 30, 30);
+
+        --foreground: rgb(243, 245, 247);
+        --foreground-secondary: rgb(119, 119, 119);
+
+        --outline: rgba(243, 245, 247, 0.15);
+    }
+
+     .dark {}
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        background-color: var(--background);
+        color: var(--foreground);
+    }
+}
+
+.btn {
+    padding: 8px 20px;
+    background-color: var(--foreground);
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn:active {
+    scale: inherit;
+}
+
