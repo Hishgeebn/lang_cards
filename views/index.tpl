@@ -7,23 +7,31 @@
       % include("_add_word_modal.tpl", langs=langs)
     </div>
 
-    <div class="input-group mx-auto" style="width: 30rem;">
-        <select
-            class="form-select form-control"
-            aria-label="select-lang"
-            name="lang_id"
-        >
-          <option value="_" selected>__</option>
-          % for x in langs:
-            <option value={{ x.id }}>{{ x.name }}</option>
-          % end
-        </select>
-      <span class="input-group-text">@</span>
-      <input type="text" class="form-control" placeholder="word (optinal)" aria-label="Server">
-      <button class="btn btn-outline-primary" type="button" id="button">Search</button>
-    </div>
+      <form action="/" method="get" >
+        <div class="input-group mx-auto" style="width: 30rem;">
+          <select
+              class="form-select form-control"
+              aria-label="select-lang"
+              name="lang_id"
+          >
+            <option value="0">___</option>
+            % for x in langs:
+              % if lang and int(lang) == x.id:
+                <option value={{ x.id }} selected>{{ x.name }}</option>
+              % else:
+                <option value={{ x.id }}>{{ x.name }}</option>
+              % end
+            % end
+          </select>
+          <span class="input-group-text">@</span>
+          <input name="word" type="text" class="form-control" placeholder="word translation (optinal)" aria-label="Server">
+          <button class="btn btn-outline-primary" type="submit" id="button">Search</button>
+        </div>
+      </form>
     
   </div>
+
+  <h4>Total words: {{ total_words }}</h4>
 
   <table class="table table-hover table-striped mx-auto w-75">
     <thead>

@@ -31,18 +31,36 @@ def index(db, page=1):
     page_size = 30
     start = (page - 1) * page_size
     langs = db.query(Language).all()
+    lang_id = request.query.get('lang_id', default=None)
+    q_word = request.query.get('word', default=None)
     
-    total_words = db.query(Word).filter(Word.language_id.isnot(None)).count()
+    base_query = db.query(Word).options(joinedload(Word.language))
+    
+    if lang_id in ["0", None]:
+        base_query = base_query.filter(Word.language_id.isnot(None))
+    else: 
+        base_query = base_query.filter(Word.language_id == lang_id)
+        
+    if q_word: 
+        base_query = base_query.filter(Word.translation.contains(q_word))
+    
+    total_words = base_query.count()
     total_pages = ceil(total_words / page_size)
     words = (
-        db.query(Word)
-        .options(joinedload(Word.language))
-        .filter(Word.language_id.isnot(None))
+        base_query
         .order_by(Word.id)
         .slice(start, start + page_size)
         .all()
     )
-    return template('views/index.tpl', langs=langs, words=words, page=page, total_pages=total_pages)   
+    return template(
+            'views/index.tpl', 
+            lang=lang_id, 
+            langs=langs, 
+            words=words, 
+            page=page, 
+            total_pages=total_pages, 
+            total_words=total_words
+        )   
 
 
 @app.post('/add-lang')
