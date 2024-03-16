@@ -1,8 +1,8 @@
-<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addLang">
-    + new language
+<button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#addWord">
+    + new word
 </button>
 
-<div class="modal fade" id="addLang" tabindex="-1" aria-labelledby="addLang" aria-hidden="true">
+<div class="modal fade" id="addWord" tabindex="-1" aria-labelledby="addWord" aria-hidden="true">
     <div class="modal-dialog">
 
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -24,29 +24,37 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="addLang">Add new language</h1>
+                <h1 class="modal-title fs-5" id="addWord">Add new word</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
                 <form 
-                    action="/add-lang" 
+                    class="was-validated"
+                    action="/add-word" 
                     method="post" 
-                    name="addLangForm" 
-                    onsubmit="return validateAddLangForm()"
+                    name="addWordForm" 
                 >
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">@</span>
-                        <input 
-                            name="lang" 
-                            type="text" 
-                            class="form-control" 
-                            placeholder="Language" 
-                            aria-label="lang" 
-                            aria-describedby="basic-addon1"
+                        <select
+                            class="form-select form-control"
+                            aria-label="select-lang"
+                            name="lang_id"
+                            required="Please select the language!"
                         >
+                            <option value="" selected>___</option>
+                            % for x in langs:
+                                <option value={{ x.id }}>{{ x.name }}</option>
+                            % end
+                        </select>
                     </div>
-                    <button type="submit" class="btn btn-success w-100">Submit</button>
+                    <div class="input-group mb-3">
+                        <input name="word" type="text" class="form-control" placeholder="word" aria-label="word" required>
+                        <span class="input-group-text">:</span>
+                        <input name="translation" type="text" class="form-control" placeholder="translation" aria-label="translation" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">add word</button>
                 </form>
             </div>
 
