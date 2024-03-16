@@ -1,7 +1,7 @@
 const toastLiveExample = document.getElementById("liveToast")
 
-function validateForm() {
-    var lang = document.forms["Form"]["lang"].value.trim()
+function validateAddLangForm() {
+    var lang = document.forms["addLangForm"]["lang"].value.trim()
 
     if (lang == null || lang == "") {
         const toastBootstrap =
