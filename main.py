@@ -52,6 +52,7 @@ def index(db, page=1):
         .slice(start, start + page_size)
         .all()
     )
+
     return template(
             'views/index.tpl', 
             lang=lang_id, 
@@ -72,6 +73,7 @@ def add_lang(db):
     db.commit()
 
     return redirect('/')
+
 
 @app.post('/add-word')
 def add_word(db):
