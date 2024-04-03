@@ -8,7 +8,7 @@ class Language(Base):
     __tablename__ = "languages"
     id = Column(Integer, primary_key=True)
     name = Column(String(50), unique=True)
-    words = relationship("Word", back_populates="language") 
+    words = relationship("Word", back_populates="language")
 
 
 class Word(Base):
@@ -16,5 +16,5 @@ class Word(Base):
     id = Column(Integer, primary_key=True)
     w_desc = Column(String, unique=True)
     translation = Column(String)
-    language_id = Column(Integer, ForeignKey("languages.id")) 
+    language_id = Column(Integer, ForeignKey("languages.id"))
     language = relationship("Language", back_populates="words")

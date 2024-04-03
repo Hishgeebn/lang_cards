@@ -14,6 +14,8 @@ url = os.environ.get('DATABASE_URL')
 engine = create_engine(url)
 connection = engine.connect()
 
+Base.metadata.create_all(engine)
+
 app = Bottle()
 plugin = SQLAlchemyPlugin(connection, Base.metadata, keyword="db")
 
@@ -28,7 +30,7 @@ def static(filename):
 @app.get('/')
 @app.get('/<page:int>')
 def index(db, page=1):
-    page_size = 30
+    page_size = 10
     start = (page - 1) * page_size
     langs = db.query(Language).all()
     lang_id = request.query.get('lang_id', default=None)
@@ -54,14 +56,14 @@ def index(db, page=1):
     )
 
     return template(
-            'views/index.tpl', 
-            lang=lang_id, 
-            langs=langs, 
-            words=words, 
-            page=page, 
-            total_pages=total_pages, 
-            total_words=total_words
-        )   
+        'views/index.tpl',
+        lang=lang_id,
+        langs=langs,
+        words=words,
+        page=page,
+        total_pages=total_pages,
+        total_words=total_words
+    )
 
 
 @app.post('/add-lang')
